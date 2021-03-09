@@ -1,8 +1,7 @@
-﻿using core1.Interfaces;
+﻿
+using core1.Entities;
+using core1.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Structura.Data;
-using Structura.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -29,6 +28,12 @@ namespace PetarSkinet.Controllers
         {
             var product = await productRepository.GetProductByIdAsync(id);
             return Ok(product);
+        }
+        [HttpGet("brands")]
+        public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
+        {
+            var brands = await productRepository.GetBrandsAsync();
+            return Ok(brands);
         }
     }
 }
