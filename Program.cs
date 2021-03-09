@@ -34,6 +34,7 @@ namespace Structura
                     logger.LogError(ex,"Greska pri migracija");
                 }
             }
+            host.Run();
 
         }
 
