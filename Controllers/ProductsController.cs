@@ -35,5 +35,12 @@ namespace PetarSkinet.Controllers
             var brands = await productRepository.GetBrandsAsync();
             return Ok(brands);
         }
+
+        [HttpGet("types")]
+        public async Task<ActionResult<IReadOnlyList<ProductType>>> GetProductTypes()
+        {
+            var types = await productRepository.GetTypesAsync();
+            return Ok(types);
+        }
     }
 }
