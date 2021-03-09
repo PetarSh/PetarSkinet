@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using core1.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Structura.Data;
 using Structura.Entities;
@@ -11,22 +12,22 @@ namespace PetarSkinet.Controllers
     [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {
-        private readonly StoreContext context;
-        public ProductsController(StoreContext storeContext)
+        private readonly IProductRepository productRepository;
+        public ProductsController(IProductRepository repo)
         {
-            context = storeContext;
+            productRepository = repo;
         }
         [HttpGet]
         public async Task< ActionResult<List<Product>>> GetProducts()
         {
-            var products =await context.Products.ToListAsync();
+            var products = await productRepository.GetProductsAsync();
             return Ok(products);
         }
 
         [HttpGet("{id}")]
         public async Task< ActionResult<Product>> GetProduct(int id)
         {
-            var product =await context.Products.FindAsync(id);
+            var product = await productRepository.GetProductByIdAsync(id);
             return Ok(product);
         }
     }

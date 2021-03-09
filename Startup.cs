@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using core1.Interfaces;
 
 namespace Structura
 {
@@ -31,6 +32,7 @@ namespace Structura
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddScoped<IProductRepository , ProductRepository>();
             services.AddControllers();
             services.AddDbContext<StoreContext>(x=>x.UseSqlServer(conf.GetConnectionString("DefaultConnection")));
 
