@@ -34,7 +34,7 @@ namespace Structura
 
             services.AddScoped<IProductRepository , ProductRepository>();
             services.AddControllers();
-            services.AddDbContext<StoreContext>(x=>x.UseSqlServer(conf.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<StoreContext>(x=>x.UseSqlServer(conf.GetConnectionString("HomeConnecton")));
 
             services.AddSwaggerGen(c =>
             {
