@@ -11,41 +11,41 @@ namespace PetarSkinet.Controllers
     [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {
-        private readonly IGenericRepository<Product> _productRepo;
-        private readonly IGenericRepository<ProductBrand> _brandRepo;
-        private readonly IGenericRepository<ProductType> _typeRepo;
+        private readonly IGenericRepository<Product> product;
+        private readonly IGenericRepository<ProductBrand> brand;
+        private readonly IGenericRepository<ProductType> type;
 
         public ProductsController(IGenericRepository<Product> productRepo,
             IGenericRepository<ProductBrand> brandRepo,IGenericRepository<ProductType> typeRepo)
         {
-            _productRepo = productRepo;
-            _brandRepo = brandRepo;
-            _typeRepo = typeRepo;
+            product = productRepo;
+            brand = brandRepo;
+            type = typeRepo;
         }
         [HttpGet]
         public async Task< ActionResult<List<Product>>> GetProducts()
         {
-            var products = await _productRepo.GetAllAsync();
+            var products = await product.GetAllAsync();
             return Ok(products);
         }
 
         [HttpGet("{id}")]
         public async Task< ActionResult<Product>> GetProduct(int id)
         {
-            var product = await _productRepo.GetByIdAsync(id);
+            var product = await product.GetByIdAsync(id);
             return Ok(product);
         }
         [HttpGet("brands")]
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
         {
-            var brands = await _brandRepo.GetAllAsync();
+            var brands = await brand.GetAllAsync();
             return Ok(brands);
         }
 
         [HttpGet("types")]
         public async Task<ActionResult<IReadOnlyList<ProductType>>> GetProductTypes()
         {
-            var types = await _typeRepo.GetAllAsync();
+            var types = await type.GetAllAsync();
             return Ok(types);
         }
     }
