@@ -11,35 +11,41 @@ namespace PetarSkinet.Controllers
     [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductRepository productRepository;
-        public ProductsController(IProductRepository repo)
+        private readonly IGenericRepository<Product> _productRepo;
+        private readonly IGenericRepository<ProductBrand> _brandRepo;
+        private readonly IGenericRepository<ProductType> _typeRepo;
+
+        public ProductsController(IGenericRepository<Product> productRepo,
+            IGenericRepository<ProductBrand> brandRepo,IGenericRepository<ProductType> typeRepo)
         {
-            productRepository = repo;
+            _productRepo = productRepo;
+            _brandRepo = brandRepo;
+            _typeRepo = typeRepo;
         }
         [HttpGet]
         public async Task< ActionResult<List<Product>>> GetProducts()
         {
-            var products = await productRepository.GetProductsAsync();
+            var products = await _productRepo.GetAllAsync();
             return Ok(products);
         }
 
         [HttpGet("{id}")]
         public async Task< ActionResult<Product>> GetProduct(int id)
         {
-            var product = await productRepository.GetProductByIdAsync(id);
+            var product = await _productRepo.GetByIdAsync(id);
             return Ok(product);
         }
         [HttpGet("brands")]
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
         {
-            var brands = await productRepository.GetBrandsAsync();
+            var brands = await _brandRepo.GetAllAsync();
             return Ok(brands);
         }
 
         [HttpGet("types")]
         public async Task<ActionResult<IReadOnlyList<ProductType>>> GetProductTypes()
         {
-            var types = await productRepository.GetTypesAsync();
+            var types = await _typeRepo.GetAllAsync();
             return Ok(types);
         }
     }
