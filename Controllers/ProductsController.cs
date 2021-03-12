@@ -32,8 +32,8 @@ namespace PetarSkinet.Controllers
         [HttpGet("{id}")]
         public async Task< ActionResult<Product>> GetProduct(int id)
         {
-            var product = await product.GetByIdAsync(id);
-            return Ok(product);
+            var products = await product.GetByIdAsync(id);
+            return Ok(products);
         }
         [HttpGet("brands")]
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
