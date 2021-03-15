@@ -25,7 +25,7 @@ namespace PetarSkinet.Controllers
         [HttpGet]
         public async Task< ActionResult<List<Product>>> GetProducts()
         {
-            var products = await product.ListAllAsync();
+            var products = await product.ListAsync();
             return Ok(products);
         }
 
