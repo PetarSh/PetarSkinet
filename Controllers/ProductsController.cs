@@ -1,6 +1,6 @@
 ﻿
-using core1.Entities;
 using core1.Interfaces;
+using core1.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -25,7 +25,7 @@ namespace PetarSkinet.Controllers
         [HttpGet]
         public async Task< ActionResult<List<Product>>> GetProducts()
         {
-            var products = await product.GetAllAsync();
+            var products = await product.ListAllAsync();
             return Ok(products);
         }
 
@@ -38,14 +38,14 @@ namespace PetarSkinet.Controllers
         [HttpGet("brands")]
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
         {
-            var brands = await brand.GetAllAsync();
+            var brands = await brand.ListAllAsync();
             return Ok(brands);
         }
 
         [HttpGet("types")]
         public async Task<ActionResult<IReadOnlyList<ProductType>>> GetProductTypes()
         {
-            var types = await type.GetAllAsync();
+            var types = await type.ListAllAsync();
             return Ok(types);
         }
     }
