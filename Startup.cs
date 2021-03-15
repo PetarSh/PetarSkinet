@@ -15,6 +15,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using core1.Interfaces;
+using AutoMapper;
+using PetarSkinet.Helpers;
 
 namespace Structura
 {
@@ -34,6 +36,7 @@ namespace Structura
 
             services.AddScoped<IProductRepository , ProductRepository>();
             services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
+            services.AddAutoMapper(typeof(MappingProfiles));
             services.AddControllers();
             services.AddDbContext<StoreContext>(x=>x.UseSqlServer(conf.GetConnectionString("DefaultConnection")));
 
