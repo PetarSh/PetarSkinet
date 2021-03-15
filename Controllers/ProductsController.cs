@@ -29,20 +29,11 @@ namespace PetarSkinet.Controllers
             map = mapper;
         }
         [HttpGet]
-        public async Task< ActionResult<List<ProductToReturnDto>>> GetProducts()
+        public async Task< ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts()
         {
             var spec = new ProductsWithTypesAndBrandsSpecification();
             var products = await product.ListAsync(spec);
-            return products.Select(product => new ProductToReturnDto
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Description = product.Description,
-                Price = product.Price,
-                PictureUrl = product.PictureUrl,
-                ProductType = product.ProductType.Name,
-                ProductBrand = product.ProductBrand.Name
-            }).ToList();
+            return Ok(map.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products));
         }
 
         [HttpGet("{id}")]
