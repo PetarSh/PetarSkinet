@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using core1.Specification;
 using PetarSkinet.Dtos;
+using System.Linq;
 
 namespace PetarSkinet.Controllers
 {
@@ -25,11 +26,20 @@ namespace PetarSkinet.Controllers
             type = typeRepo;
         }
         [HttpGet]
-        public async Task< ActionResult<List<Product>>> GetProducts()
+        public async Task< ActionResult<List<ProductToReturnDto>>> GetProducts()
         {
             var spec = new ProductsWithTypesAndBrandsSpecification();
             var products = await product.ListAsync(spec);
-            return Ok(products);
+            return products.Select(product => new ProductToReturnDto
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                PictureUrl = product.PictureUrl,
+                ProductType = product.ProductType.Name,
+                ProductBrand = product.ProductBrand.Name
+            }).ToList();
         }
 
         [HttpGet("{id}")]
