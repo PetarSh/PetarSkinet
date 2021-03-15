@@ -4,6 +4,7 @@ using core1.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using core1.Specification;
 
 namespace PetarSkinet.Controllers
 {
@@ -25,7 +26,8 @@ namespace PetarSkinet.Controllers
         [HttpGet]
         public async Task< ActionResult<List<Product>>> GetProducts()
         {
-            var products = await product.ListAsync();
+            var spec = new ProductsWithTypesAndBrandsSpecification();
+            var products = await product.ListAsync(spec);
             return Ok(products);
         }
 
