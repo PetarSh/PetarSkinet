@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using core1.Specification;
+using PetarSkinet.Dtos;
 
 namespace PetarSkinet.Controllers
 {
@@ -32,11 +33,21 @@ namespace PetarSkinet.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task< ActionResult<Product>> GetProduct(int id)
+        public async Task< ActionResult<ProductToReturnDto>> GetProduct(int id)
         {
             var spec = new ProductsWithTypesAndBrandsSpecification(id);
             var products = await product.GetEntityWithSpec(spec);
-            return Ok(products);
+            return new ProductToReturnDto
+            {
+                Id = products.Id,
+                Name = products.Name,
+                Description = products.Description,
+                Price = products.Price,
+                PictureUrl = products.PictureUrl,
+                ProductType = products.ProductType.Name,
+                ProductBrand = products.ProductBrand.Name
+            };
+            
         }
         [HttpGet("brands")]
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
