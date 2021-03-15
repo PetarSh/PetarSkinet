@@ -34,7 +34,8 @@ namespace PetarSkinet.Controllers
         [HttpGet("{id}")]
         public async Task< ActionResult<Product>> GetProduct(int id)
         {
-            var products = await product.GetByIdAsync(id);
+            var spec = new ProductsWithTypesAndBrandsSpecification(id);
+            var products = await product.GetEntityWithSpec(spec);
             return Ok(products);
         }
         [HttpGet("brands")]
