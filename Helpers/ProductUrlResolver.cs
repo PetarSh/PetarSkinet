@@ -18,7 +18,11 @@ namespace PetarSkinet.Helpers
         }
         public string Resolve(Product source, ProductToReturnDto destination, string destMember, ResolutionContext context)
         {
-            throw new NotImplementedException();
+            if (!string.IsNullOrEmpty(source.PictureUrl))
+            {
+                return configuration["ApiUrl"] + source.PictureUrl;           
+            }
+            return null;
         }
     }
 }
