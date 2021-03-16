@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PetarSkinet.Errors;
 using Structura.Data;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace PetarSkinet.Controllers
             var thing = store.Products.Find(42);
             if (thing==null)
             {
-                return NotFound();
+                return NotFound(new ApiResponse(404));
             }
             return Ok();
         }
@@ -40,7 +41,7 @@ namespace PetarSkinet.Controllers
         [HttpGet("bad request")]
         public ActionResult GetBadRequest()
         {
-            return BadRequest();
+            return BadRequest(new ApiResponse(400));
         }
         [HttpGet("bad request/{id}")]
         public ActionResult GetBadRequestId(int id)
