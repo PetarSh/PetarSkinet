@@ -11,7 +11,7 @@ namespace PetarSkinet.Helpers
 {
     public class ProductUrlResolver : IValueResolver<Product, ProductToReturnDto, string>
     {
-        private readonly IConfiguration configuration
+        private readonly IConfiguration configuration;
         public ProductUrlResolver(IConfiguration conf)
         {
             configuration = conf;
