@@ -8,6 +8,8 @@ using core1.Specification;
 using PetarSkinet.Dtos;
 using System.Linq;
 using AutoMapper;
+using PetarSkinet.Errors;
+using Microsoft.AspNetCore.Http;
 
 namespace PetarSkinet.Controllers
 {
@@ -35,13 +37,19 @@ namespace PetarSkinet.Controllers
             var products = await product.ListAsync(spec);
             return Ok(map.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products));
         }
-
+       
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse),StatusCodes.Status404NotFound)]
         public async Task< ActionResult<ProductToReturnDto>> GetProduct(int id)
         {
             var spec = new ProductsWithTypesAndBrandsSpecification(id);
-            var products = await product.GetEntityWithSpec(spec);
-            return map.Map<Product, ProductToReturnDto>(products);
+            var produkt = await product.GetEntityWithSpec(spec);
+            if (produkt == null)
+            {
+                return NotFound(new ApiResponse(404));
+            }
+            return map.Map<Product, ProductToReturnDto>(produkt);
             
         }
         [HttpGet("brands")]
