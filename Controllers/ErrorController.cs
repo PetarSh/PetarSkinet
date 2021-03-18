@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
 using PetarSkinet.Errors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PetarSkinet.Controllers
 {
-   [Route("errors/{code}")]
+    [Route("errors/{code}")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class ErrorController : BaseApiController
     {
         public IActionResult Error(int code)
