@@ -10,6 +10,8 @@ using PetarSkinet.Errors;
 using Microsoft.AspNetCore.Http;
 using PetarSkinet.core1.Specification;
 using core1.Specification;
+using PetarSkinet.Helpers;
+using core1.Specifications;
 
 namespace PetarSkinet.Controllers
 {
@@ -31,11 +33,16 @@ namespace PetarSkinet.Controllers
             map = mapper;
         }
         [HttpGet]
-        public async Task< ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts([FromQuery]ProductSpecParam specParam)
+        public async Task< ActionResult<Pagination<ProductToReturnDto>>> GetProducts([FromQuery]ProductSpecParam specParam)
         {
             var spec = new ProductsWithTypesAndBrandsSpecification(specParam);
+            var countSpec = new ProductsWithFiltersForCountSpecification(specParam);
+            var totalItems = await product.CountAsync(countSpec);
             var products = await product.ListAsync(spec);
-            return Ok(map.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products));
+            var data = map.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products);
+
+
+            return Ok(new Pagination<ProductToReturnDto>(specParam.pageIndex,specParam.PageSize,totalItems,data));
         }
        
         [HttpGet("{id}")]
