@@ -8,7 +8,7 @@ namespace core1.Specification
     {
         public ProductsWithTypesAndBrandsSpecification(ProductSpecParam specParam)
             : base(x =>
-            (string.IsNullOrEmpty(specParam.Search) || x.Name.ToLower().Contains(specParam.Search)) &&
+            (!string.IsNullOrEmpty(specParam.Search) || x.Name.ToLower().Contains(specParam.Search)) &&
             (! specParam.Brandid.HasValue || x.ProductBrandId == specParam.Brandid) &&
             (!specParam.Typeid.HasValue || x.ProductTypeId == specParam.Typeid)
 
