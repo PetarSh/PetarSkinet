@@ -29,7 +29,7 @@ namespace Structura
             
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddControllers();
-            services.AddDbContext<StoreContext>(x=>x.UseSqlServer(conf.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<StoreContext>(x=>x.UseSqlServer(conf.GetConnectionString("HomeConnecton")));
 
             services.AddApplicationServices();
             services.AddSwaggerDocumentation();
