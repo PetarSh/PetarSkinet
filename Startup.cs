@@ -33,7 +33,14 @@ namespace Structura
 
             services.AddApplicationServices();
             services.AddSwaggerDocumentation();
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy("CorsPolicy", policy =>
+                 {
+                     policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:44310");
+                 });
 
+            });
 
         }
 
@@ -54,6 +61,8 @@ namespace Structura
 
             app.UseRouting();
             app.UseStaticFiles();
+            app.UseCors("CorsPolicy");
+
 
             app.UseAuthorization();
             
