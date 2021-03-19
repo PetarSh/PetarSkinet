@@ -25,7 +25,7 @@ namespace Structura.Data
             {
                 query = query.OrderByDescending(spec.OrderByDescending);
             }
-
+            //redosledot e vazen posle where i order
             if (spec.IsPagingEnabled)
             {
                 query = query.Skip(spec.Skip).Take(spec.Take);

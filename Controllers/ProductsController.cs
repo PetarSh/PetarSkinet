@@ -4,16 +4,16 @@ using core1.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using core1.Specification;
 using PetarSkinet.Dtos;
-using System.Linq;
 using AutoMapper;
 using PetarSkinet.Errors;
 using Microsoft.AspNetCore.Http;
+using PetarSkinet.core1.Specification;
+using core1.Specification;
 
 namespace PetarSkinet.Controllers
 {
-    
+
     public class ProductsController : BaseApiController
 
     {
@@ -31,10 +31,9 @@ namespace PetarSkinet.Controllers
             map = mapper;
         }
         [HttpGet]
-        public async Task< ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts(string sort,
-            int? brandid, int? typeid)
+        public async Task< ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts([FromQuery]ProductSpecParam specParam)
         {
-            var spec = new ProductsWithTypesAndBrandsSpecification(sort, brandid, typeid);
+            var spec = new ProductsWithTypesAndBrandsSpecification(specParam);
             var products = await product.ListAsync(spec);
             return Ok(map.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products));
         }

@@ -1,20 +1,16 @@
 ﻿using core1.Entities;
 using core1.Specifications;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PetarSkinet.core1.Specification;
 
 namespace core1.Specification
 {
     public class ProductsWithTypesAndBrandsSpecification :BaseSpecifcation<Product>
     {
-        public ProductsWithTypesAndBrandsSpecification(string sort, int? brandid, int? typeid)
+        public ProductsWithTypesAndBrandsSpecification(ProductSpecParam specParam)
             : base(x =>
-             (!brandid.HasValue || x.ProductBrandId == brandid) &&
+             (! specParam.Brandid.HasValue || x.ProductBrandId == specParam.Brandid) &&
 
-             (!typeid.HasValue || x.ProductTypeId == typeid)
+             (!specParam.Typeid.HasValue || x.ProductTypeId == specParam.Typeid)
 
             )
  
@@ -23,10 +19,11 @@ namespace core1.Specification
             AddInclude(x => x.ProductBrand);
             AddInclude(x => x.ProductType);
             AddOrderBy(x => x.Name);
+            ApplyPaging(specParam.PageSize * (specParam.pageIndex - 1),specParam.PageSize);
 
-            if (!string.IsNullOrEmpty(sort))
+            if (!string.IsNullOrEmpty(specParam.Sort))
             {
-                switch (sort)
+                switch (specParam.Sort)
                 {
                     case "priceAsc":
                         AddOrderBy(p => p.Price);
