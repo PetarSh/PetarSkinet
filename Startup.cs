@@ -37,7 +37,8 @@ namespace Structura
             {
                 opt.AddPolicy("CorsPolicy", policy =>
                  {
-                     policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:44310");
+                     policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:44310/");
+                     
                  });
 
             });
