@@ -30,31 +30,27 @@ namespace Structura
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddControllers();
             services.AddDbContext<StoreContext>(x=>x.UseSqlServer(conf.GetConnectionString("HomeConnecton")));
-
             services.AddApplicationServices();
-            services.AddSwaggerDocumentation();
+            
             services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy", policy =>
                  {
-                     policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:44310/");
+                     policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
                      
                  });
 
             });
-
+            services.AddSwaggerDocumentation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseMiddleware<ExceptionMiddleware>();
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwaggerDocumentation();
-            }
+            
+               
+           
             
             app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
@@ -62,11 +58,11 @@ namespace Structura
 
             app.UseRouting();
             app.UseStaticFiles();
+
             app.UseCors("CorsPolicy");
-
-
+           
             app.UseAuthorization();
-            
+            app.UseSwaggerDocumentation();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
