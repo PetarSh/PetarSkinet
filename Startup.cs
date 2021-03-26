@@ -36,7 +36,7 @@ namespace Structura
             {
                 opt.AddPolicy("CorsPolicy", policy =>
                  {
-                     policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+                     policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:44321");
                      
                  });
 
@@ -48,16 +48,16 @@ namespace Structura
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseMiddleware<ExceptionMiddleware>();
-            
+            app.UseSwaggerDocumentation();
             app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
             app.UseStaticFiles();
-
+           
             app.UseCors("CorsPolicy");
-            app.UseSwaggerDocumentation();
+            
             app.UseAuthorization();
             
             app.UseEndpoints(endpoints =>
