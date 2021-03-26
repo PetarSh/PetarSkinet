@@ -49,9 +49,6 @@ namespace Structura
         {
             app.UseMiddleware<ExceptionMiddleware>();
             
-               
-           
-            
             app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
             app.UseHttpsRedirection();
@@ -60,9 +57,9 @@ namespace Structura
             app.UseStaticFiles();
 
             app.UseCors("CorsPolicy");
-           
-            app.UseAuthorization();
             app.UseSwaggerDocumentation();
+            app.UseAuthorization();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
